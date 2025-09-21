@@ -27,8 +27,6 @@ UPDATE patrons
 SET borrowed_books = array_append(borrowed_books, 1)
 WHERE id = 1 AND NOT (1 = ANY(borrowed_books));
 
-
--- If using normalized loans table, insert loan and set book unavailable
 BEGIN;
 INSERT INTO loans (patron_id, book_id) VALUES (1, 1);
 UPDATE books SET available = FALSE WHERE id = 1;
@@ -61,10 +59,10 @@ UPDATE books SET available = TRUE;
 SELECT * FROM books WHERE available = TRUE AND published_year > 1950;
 
 
--- Find authors whose names contain "George" (case-insensitive)
-SELECT * FROM authors WHERE name ILIKE '%George%';
+-- Find authors whose names contain "George" (case insensitive)
+SELECT * FROM authors WHERE name LIKE '%George%';
 
 
--- Increment the published year 1869 by 1 (example: War and Peace)
+-- Increment the published year 1869 by 1 
 UPDATE books SET published_year = published_year + 1 WHERE published_year = 1869;
 
